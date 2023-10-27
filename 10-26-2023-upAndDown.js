@@ -55,22 +55,49 @@
 
 // P - Psuedocode
 // 1.) split the string into an array of items.  We're seperating on the white space.
-// 2.) Iterate through the array.  If the length of the array[0] is less than or equal to the next item, GOOD MOVE ON, otherwise, move that item to a different spot in the array.
+// 2.) make a counter for how many times my if statement will run.  It should only run one less than the array length
+// 2.) Iterate through the array.  If the array index is 0 or even, run test a.  If the array index is odd, run test b
 // 3.) 
 // 4.) 
 
 // -------------------------------------------------------------------- //
 // --------------------------------SOLUTION---------------------------- //
 
-function arrange(strng) {
-    let arr = strng.split(" ")  //convert string to array
-    for (i = 0; i < arr.length; i+2){  //for every other item in the array
-      if (arr[i].length >= arr[i+1].length){  //if the length of the item is greater than the next item's length in the array
-        let holder = arr.splice(arr[i],1)  //delete that item and store it in the holder
-        arr.splice(arr[i+2],0,holder)  //then put that deleted item in the spot 2 items further along.
-      }
+// function arrange(strng) {
+//     let arr = strng.split(" ")  //convert string to array
+//     for (i = 0; i < arr.length; i+2){  //for every other item in the array
+//       if (arr[i].length >= arr[i+1].length){  //if the length of the item is greater than the next item's length in the array
+//         let holder = arr.splice(arr[i],1)  //delete that item and store it in the holder
+//         arr.splice(arr[i+2],0,holder)  //then put that deleted item in the spot 2 items further along.
+//       }
         
+//     }
+//     return arr.toString()
+//     console.log(arr)
+// }
+
+function arrange(strng) {
+    let arr = strng.split(" ");  // Convert string to array
+    
+    // Use let i = 0 to initialize i and i += 2 to increment by 2
+    for (let i = 0; i < arr.length - 1; i ++) {  // For every item in the array except the last
+        if ((i == 0 || i%2==0) && arr[i].length > arr[i + 1].length) {  // If the length of the item is greater than the next item's length in the array
+            let holder = arr[i];  // Store the item in holder
+            arr[i] = arr[i + 1];  // Swap the items
+            arr[i + 1] = holder;
+             
+        } else if (i%2 != 0 && arr[i].length < arr[i + 1].length) {
+            let holder = arr[i];  // Store the item in holder
+            arr[i] = arr[i + 1];  // Swap the items
+            arr[i + 1] = holder;
+                
+            }
     }
-    return arr.toString()
-    console.log(arr)
+    
+    // Convert even indices to lower case and odd indices to upper case
+    for (let i = 0; i < arr.length; i++) {
+        arr[i] = i % 2 === 0 ? arr[i].toLowerCase() : arr[i].toUpperCase();
+    }
+    
+    return arr.join(' ');  // Convert array back to string
 }
